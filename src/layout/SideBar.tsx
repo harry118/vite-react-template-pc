@@ -80,6 +80,7 @@ const SideBar: React.FC = () => {
         mode='inline'
         defaultSelectedKeys={['home']}
         selectedKeys={[location.pathname]}
+        // openKeys={[location.pathname]}
         items={items}
       />
     </Sider>
