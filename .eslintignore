@@ -1,4 +1,4 @@
-.eslintrc.js
+.eslintrc.cjs
 node_modules
 dist
 .DS_Store

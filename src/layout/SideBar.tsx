@@ -1,17 +1,17 @@
-import React from 'react';
-import { Layout, Menu } from 'antd';
-import * as Icon from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react'
+import { Layout, Menu } from 'antd'
+import * as Icon from '@ant-design/icons'
+import type { MenuProps } from 'antd'
+import { Link, useLocation } from 'react-router-dom'
 
-import './SideBar.less';
+import './SideBar.less'
 
 export interface IMenuItems {
-  code: string;
-  label: React.ReactNode;
-  path: string;
-  icon: string;
-  children?: IMenuItems[];
+  code: string
+  label: React.ReactNode
+  path: string
+  icon: string
+  children?: IMenuItems[]
 }
 
 const menus: IMenuItems[] = [
@@ -19,7 +19,7 @@ const menus: IMenuItems[] = [
     code: 'home',
     label: '首页',
     path: '/',
-    icon: 'HomeOutlined',
+    icon: 'HomeOutlined'
   },
   {
     code: 'auth',
@@ -31,38 +31,40 @@ const menus: IMenuItems[] = [
         code: 'user',
         label: '用户管理',
         path: '/auth/user',
-        icon: 'UsergroupDeleteOutlined',
+        icon: 'UsergroupDeleteOutlined'
       },
       {
         code: 'role',
         label: '角色管理',
         path: '/auth/role',
-        icon: 'AuditOutlined',
-      },
-    ],
-  },
-];
+        icon: 'AuditOutlined'
+      }
+    ]
+  }
+]
 
-const { Sider } = Layout;
+const { Sider } = Layout
 const renderMenuLabel = (menu: IMenuItems) => {
   // 如果有children, 则直接显示label
-  if (menu?.children && menu?.children.length > 0) {
-    return menu.label;
+  if (((menu?.children) != null) && menu?.children.length > 0) {
+    return menu.label
   }
-  return <Link to={menu.path}>{menu.label}</Link>;
-};
+  return <Link to={menu.path}>{menu.label}</Link>
+}
 const renderMenu = (menus: IMenuItems[]): MenuProps['items'] => {
-  return menus.map((item) => ({
-    // 这里用path作为key，为了react-router的path能对应到Menu的key
-    key: item.path,
-    icon: React.createElement(Icon[item.icon]),
-    label: renderMenuLabel(item),
-    children: item.children ? renderMenu(item?.children || []) : null,
-  }));
-};
-const items: MenuProps['items'] = renderMenu(menus);
+  return menus.map((item) => {
+    return ({
+      // 这里用path作为key，为了react-router的path能对应到Menu的key
+      key: item.path,
+      icon: React.createElement(Icon[item.icon]),
+      label: renderMenuLabel(item),
+      children: (item.children != null) ? renderMenu(item.children) : null
+    })
+  })
+}
+const items: MenuProps['items'] = renderMenu(menus)
 const SideBar: React.FC = () => {
-  const location = useLocation();
+  const location = useLocation()
   return (
     <Sider
       style={{
@@ -71,10 +73,10 @@ const SideBar: React.FC = () => {
         position: 'fixed',
         left: 0,
         top: 0,
-        bottom: 0,
+        bottom: 0
       }}
     >
-      <div className='logo' />
+      <div className='logo'/>
       <Menu
         theme='dark'
         mode='inline'
@@ -84,7 +86,7 @@ const SideBar: React.FC = () => {
         items={items}
       />
     </Sider>
-  );
-};
+  )
+}
 
-export default SideBar;
+export default SideBar

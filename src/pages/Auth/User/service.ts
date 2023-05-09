@@ -6,9 +6,11 @@ export interface IUserItem {
   avatar: string;
   isActive: boolean;
 }
-export const queryUserList = () => {
+
+export const queryUserList = (params: any) => {
   return request<IUserItem[]>({
     url: '/apis/users/list',
-    method: 'get',
+    method: 'post',
+    data: params
   });
 };
