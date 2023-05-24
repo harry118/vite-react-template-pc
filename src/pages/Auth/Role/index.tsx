@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react'
-import {Space, Table, Tag} from 'antd'
-import type {ColumnsType} from 'antd/es/table'
-import {queryRoleList} from './service'
-import {useQuery} from '@tanstack/react-query'
+import React, { useEffect, useState } from 'react'
+import { Space, Table, Tag } from 'antd'
+import type { ColumnsType } from 'antd/es/table'
+import { queryRoleList } from './service'
+import { useQuery } from '@tanstack/react-query'
 
 interface IUserProps {
   test?: string
@@ -45,9 +45,9 @@ const columns: ColumnsType<DataType> = [
 ]
 
 const Role: React.FC<IUserProps> = () => {
-  const {data, isLoading, error} = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['queryRoleList'],
-    queryFn: () => queryRoleList(),
+    queryFn: async () => await queryRoleList(),
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,

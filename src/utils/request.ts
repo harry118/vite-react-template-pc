@@ -1,12 +1,13 @@
-import axios, {type AxiosRequestConfig, type AxiosResponse} from 'axios'
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 // import { IApiResponse } from '@/index.d';
 import Cookies from 'js-cookie'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
+// const navigate = useNavigate()
 export interface IApiResponse<T> {
   code: number
   data: T
-  extra?: {}
+  extra?: Record<string, unknown>
   message: string
   success: boolean
 }
@@ -18,10 +19,12 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: AxiosRequestConfig): any => {
     // 在发送请求之前做些什么
     config.headers = {
-      token: Cookies.get('token') ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjMsImlhdCI6MTY4MTcxMTY0N30.E-o1IhUCTZ1uEvjjpKxoEcFt3LaxADPOpn2z1KX8lOg'
+      token:
+        Cookies.get('token') ??
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjMsImlhdCI6MTY4MTcxMTY0N30.E-o1IhUCTZ1uEvjjpKxoEcFt3LaxADPOpn2z1KX8lOg'
     }
     return config
   },
@@ -33,21 +36,19 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   // 2xx 范围内的状态码都会触发该函数。
   // 对响应数据做点什么
-  function (response: AxiosResponse) {
+  (response: AxiosResponse) => {
     // const { data } = response;
     return response
     // return data;
   },
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
-  async function (error) {
-    const navigate = useNavigate()
-    const status = error.status
+  async (error) => {
+    const status = error.response.status
     switch (status) {
       case 401:
-        navigate('/login')
+        // navigate('/login')
         break
-
       default:
         break
     }
@@ -58,18 +59,16 @@ const request = async <T = unknown>(
   config: AxiosRequestConfig
 ): Promise<IApiResponse<T>> => {
   try {
-    const {data} = await axiosInstance.request<IApiResponse<T>>(config)
+    const { data } = await axiosInstance.request<IApiResponse<T>>(config)
     return data
   } catch (error: unknown) {
     const msg = (error as any).message
-    // console.log(error)
     return {
       code: -1,
       message: msg,
       data: null as any,
       success: false
     }
-  } finally {
   }
 }
 

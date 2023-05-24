@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { createElement } from 'react'
 import { Layout, Menu } from 'antd'
 import * as Icon from '@ant-design/icons'
+import { createFromIconfontCN } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
-import './SideBar.less'
+import styles from './sidebar.module.less'
 
 export interface IMenuItems {
   code: string
@@ -13,7 +14,9 @@ export interface IMenuItems {
   icon: string
   children?: IMenuItems[]
 }
-
+const IconFont = createFromIconfontCN({
+  // scriptUrl: '//at.alicdn.com/t/font_1234567.js', // 替换为您的字体文件地址
+})
 const menus: IMenuItems[] = [
   {
     code: 'home',
@@ -44,22 +47,23 @@ const menus: IMenuItems[] = [
 ]
 
 const { Sider } = Layout
-const renderMenuLabel = (menu: IMenuItems) => {
+const renderMenuLabel = (menu: IMenuItems): React.ReactNode => {
   // 如果有children, 则直接显示label
-  if (((menu?.children) != null) && menu?.children.length > 0) {
+  if (menu?.children != null && menu?.children.length > 0) {
     return menu.label
   }
   return <Link to={menu.path}>{menu.label}</Link>
 }
 const renderMenu = (menus: IMenuItems[]): MenuProps['items'] => {
   return menus.map((item) => {
-    return ({
+    return {
       // 这里用path作为key，为了react-router的path能对应到Menu的key
       key: item.path,
-      icon: React.createElement(Icon[item.icon]),
+      icon:
+        item.icon != null ? createElement(IconFont, { type: item.icon }) : null,
       label: renderMenuLabel(item),
-      children: (item.children != null) ? renderMenu(item.children) : null
-    })
+      children: item.children != null ? renderMenu(item.children) : null
+    }
   })
 }
 const items: MenuProps['items'] = renderMenu(menus)
@@ -76,7 +80,7 @@ const SideBar: React.FC = () => {
         bottom: 0
       }}
     >
-      <div className='logo'/>
+      <div className={styles.logo} />
       <Menu
         theme='dark'
         mode='inline'

@@ -1,8 +1,8 @@
-import { createContext, useState } from 'react';
+import { createContext, useState } from 'react'
 
 const defaultCommon = {
-  name: 'commonContext',
-};
-const [common, setCommon] = useState<any>(defaultCommon);
+  name: 'commonContext'
+}
+const [common, setCommon] = useState<any>(defaultCommon)
 
-export const CommonConText = createContext(common);
+export const CommonConText = createContext(common)

@@ -10,6 +10,19 @@ export default defineConfig({
   },
   plugins: [react()],
   envPrefix: ['APP_'],
+  css: {
+    devSourcemap: true,
+    preprocessorOptions: {
+      less: {
+        math: "always",
+      }
+    },
+    modules: {
+      localsConvention: 'camelCase',
+      scopeBehaviour: 'local',
+      generateScopedName: '[name]_[local]_[hash:5]',
+    }
+  },
   resolve: {
     alias: {
       '@assets': resolve(__dirname, 'src/assets'),

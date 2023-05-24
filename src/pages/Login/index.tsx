@@ -1,30 +1,31 @@
-import React from 'react';
-import { Button, Form, Input } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import React from 'react'
+import { Button, Form, Input } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
-import { login } from './service';
+import { login } from './service'
 
 interface ILoginProps {
-  test?: string;
+  test?: string
 }
 const Login: React.FC<ILoginProps> = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const onFinish = async (values: unknown) => {
-    console.log('Success:', values);
-    const result = await login(values);
-    // debugger;
-    if (result.success) {
-      Cookies.set('token', result.data.token);
-      navigate('/', { replace: true });
+  const onFinish = (values: unknown): void => {
+    const handl = async (): Promise<void> => {
+      const result = await login(values)
+      if (result.success) {
+        Cookies.set('token', result.data.token)
+        navigate('/', { replace: true })
+      }
+      console.log('result', result)
     }
-    console.log('result', result);
-  };
+    void handl()
+  }
 
-  const onFinishFailed = (errorInfo: unknown) => {
-    console.log('Failed:', errorInfo);
-  };
+  const onFinishFailed = (errorInfo: unknown): void => {
+    console.log('Failed:', errorInfo)
+  }
   return (
     <div>
       <Form
@@ -43,7 +44,6 @@ const Login: React.FC<ILoginProps> = () => {
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           label='密码'
           name='password'
@@ -59,6 +59,6 @@ const Login: React.FC<ILoginProps> = () => {
         </Form.Item>
       </Form>
     </div>
-  );
-};
-export default Login;
+  )
+}
+export default Login

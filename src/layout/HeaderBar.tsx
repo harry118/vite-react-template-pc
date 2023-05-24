@@ -1,46 +1,45 @@
 import React from 'react'
 import { DownOutlined } from '@ant-design/icons'
-import { Avatar, Dropdown, Space } from 'antd'
 import type { MenuProps } from 'antd'
-
-import './HeaderBar.less'
-
-const items: MenuProps['items'] = [
-  {
-    label: (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.antgroup.com"
-      >
-        1st menu item
-      </a>
-    ),
-    key: '0'
-  },
-  {
-    label: (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.aliyun.com"
-      >
-        2nd menu item
-      </a>
-    ),
-    key: '1'
-  }
-]
+import { Avatar, Dropdown, Space } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
+import avatar from '@assets/avatar.png'
+import styles from './header-bar.module.less'
 
 const HeaderBar: React.FC = () => {
+  const navigate = useNavigate()
+  const logout = (): void => {
+    Cookies.remove('token')
+    navigate('/login', { replace: true })
+  }
+  const items: MenuProps['items'] = [
+    {
+      label: <a onClick={logout}>退出登录</a>,
+      key: '0'
+    },
+    {
+      label: (
+        <a
+          target='_blank'
+          rel='noopener noreferrer'
+          href='https://www.aliyun.com'
+        >
+          我的主页
+        </a>
+      ),
+      key: '1'
+    }
+  ]
+
   return (
-    <div className="main_header">
+    <div className={styles.main_header}>
       <Dropdown menu={{ items }}>
         <a onClick={(e) => {
           e.preventDefault()
         }}>
           <Space>
-            <Avatar src="https://joeschmoe.io/api/v1/random"/>
+            <Avatar src={avatar}/>
             <DownOutlined/>
           </Space>
         </a>
@@ -48,5 +47,4 @@ const HeaderBar: React.FC = () => {
     </div>
   )
 }
-
 export default HeaderBar

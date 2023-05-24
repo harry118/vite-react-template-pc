@@ -1,13 +1,13 @@
-import request from '@utils/request';
+import request from '@utils/request'
 
 export interface ILogin {
-  token: string;
+  token: string
 }
 
-export const login = (params: any) => {
-  return request<ILogin>({
+export const login = async (params: any) => {
+  return await request<ILogin>({
     url: '/apis/auth/login',
     method: 'post',
-    data: params,
-  });
-};
+    data: params
+  })
+}
