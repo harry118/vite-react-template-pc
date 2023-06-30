@@ -12,18 +12,18 @@ const { Content } = Layout
 const MainLayout: React.FC = () => {
   return (
     <Layout hasSider className={styles.main}>
-      <SideBar/>
+      <SideBar />
       <Layout className={styles.siteLayout} style={{ marginLeft: 200 }}>
-        <HeaderBar/>
+        <HeaderBar />
         <Content
           className={styles.main_content}
           style={{ margin: '24px 14px 0', overflow: 'initial' }}
         >
           <div style={{ textAlign: 'center' }}>
-            <Outlet/>
+            <Outlet />
           </div>
         </Content>
-        <FooterBar/>
+        <FooterBar />
       </Layout>
     </Layout>
   )

@@ -57,16 +57,17 @@ const User: React.FC<IUserProps> = () => {
   // const {data, loading, error, run} = useRequest((queryParams) => queryUserList(queryParams), {
   //   manual: false
   // })
+  const formData = form.getFieldsValue()
   const {
     isLoading: loading,
     isError,
     data,
     refetch
-  } = useQuery({
-    queryKey: ['queryUserList'],
-    queryFn: async () => await queryUserList(form.getFieldsValue())
+  } = useQuery(['queryUserList', queryParams], async () => await queryUserList(queryParams), {
+    refetchOnWindowFocus: false
   })
   const onFinish = (values: any): void => {
+    debugger
     console.log('Received values of form: ', values)
     refetch(values)
       .then(() => {
