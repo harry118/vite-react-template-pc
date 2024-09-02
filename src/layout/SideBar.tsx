@@ -1,8 +1,7 @@
 import React, { createElement } from 'react'
-import { Layout, Menu } from 'antd'
-import * as Icon from '@ant-design/icons'
-import { createFromIconfontCN } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
+import { Layout, Menu } from 'antd'
+import { createFromIconfontCN } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 
 import styles from './sidebar.module.less'
@@ -40,6 +39,12 @@ const menus: IMenuItems[] = [
         code: 'role',
         label: '角色管理',
         path: '/auth/role',
+        icon: 'AuditOutlined'
+      },
+      {
+        code: 'export',
+        label: '导出docx',
+        path: '/export/docx',
         icon: 'AuditOutlined'
       }
     ]

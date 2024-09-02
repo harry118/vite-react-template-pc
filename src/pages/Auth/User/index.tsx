@@ -67,7 +67,6 @@ const User: React.FC<IUserProps> = () => {
     refetchOnWindowFocus: false
   })
   const onFinish = (values: any): void => {
-    debugger
     console.log('Received values of form: ', values)
     refetch(values)
       .then(() => {
