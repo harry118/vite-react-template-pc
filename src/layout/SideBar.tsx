@@ -1,65 +1,79 @@
-import React, { createElement } from 'react'
-import type { MenuProps } from 'antd'
-import { Layout, Menu } from 'antd'
-import { createFromIconfontCN } from '@ant-design/icons'
-import { Link, useLocation } from 'react-router-dom'
+import React, { createElement } from "react";
+import type { MenuProps } from "antd";
+import { Layout, Menu } from "antd";
+import { createFromIconfontCN } from "@ant-design/icons";
+import { Link, useLocation } from "react-router-dom";
 
-import styles from './sidebar.module.less'
+import styles from "./sidebar.module.less";
 
 export interface IMenuItems {
-  code: string
-  label: React.ReactNode
-  path: string
-  icon: string
-  children?: IMenuItems[]
+  code: string;
+  label: React.ReactNode;
+  path: string;
+  icon: string;
+  children?: IMenuItems[];
 }
 const IconFont = createFromIconfontCN({
   // scriptUrl: '//at.alicdn.com/t/font_1234567.js', // 替换为您的字体文件地址
-})
+});
 const menus: IMenuItems[] = [
   {
-    code: 'home',
-    label: '首页',
-    path: '/',
-    icon: 'HomeOutlined'
+    code: "home",
+    label: "首页",
+    path: "/",
+    icon: "HomeOutlined",
   },
   {
-    code: 'auth',
-    label: '权限管理',
-    path: '/auth',
-    icon: 'LockOutlined',
+    code: "auth",
+    label: "权限管理",
+    path: "/auth",
+    icon: "LockOutlined",
     children: [
       {
-        code: 'user',
-        label: '用户管理',
-        path: '/auth/user',
-        icon: 'UsergroupDeleteOutlined'
+        code: "user",
+        label: "用户管理",
+        path: "/auth/user",
+        icon: "UsergroupDeleteOutlined",
       },
       {
-        code: 'role',
-        label: '角色管理',
-        path: '/auth/role',
-        icon: 'AuditOutlined'
+        code: "role",
+        label: "角色管理",
+        path: "/auth/role",
+        icon: "AuditOutlined",
       },
       {
-        code: 'export',
-        label: '导出docx',
-        path: '/export/docx',
-        icon: 'AuditOutlined'
-      }
-    ]
-  }
-]
+        code: "export",
+        label: "导出docx",
+        path: "/export/docx",
+        icon: "AuditOutlined",
+      },
+    ],
+  },
+  {
+    code: "contract",
+    label: "合同",
+    path: "/contract",
+    icon: "HomeOutlined",
+    children: [
+      {
+        code: "contract_list",
+        label: "合同列表",
+        path: "/contract/list",
+        icon: "AuditOutlined",
+      },
+    ],
+  },
+];
 
-const { Sider } = Layout
+const { Sider } = Layout;
 const renderMenuLabel = (menu: IMenuItems): React.ReactNode => {
   // 如果有children, 则直接显示label
   if (menu?.children != null && menu?.children.length > 0) {
-    return menu.label
+    return menu.label;
   }
-  return <Link to={menu.path}>{menu.label}</Link>
-}
-const renderMenu = (menus: IMenuItems[]): MenuProps['items'] => {
+  return <Link to={menu.path}>{menu.label}</Link>;
+};
+const renderMenu = (menus: IMenuItems[]): MenuProps["items"] => {
   return menus.map((item) => {
     return {
       // 这里用path作为key，为了react-router的path能对应到Menu的key
@@ -67,35 +81,35 @@ const renderMenu = (menus: IMenuItems[]): MenuProps['items'] => {
       icon:
         item.icon != null ? createElement(IconFont, { type: item.icon }) : null,
       label: renderMenuLabel(item),
-      children: item.children != null ? renderMenu(item.children) : null
-    }
-  })
-}
-const items: MenuProps['items'] = renderMenu(menus)
+      children: item.children != null ? renderMenu(item.children) : null,
+    };
+  });
+};
+const items: MenuProps["items"] = renderMenu(menus);
 const SideBar: React.FC = () => {
-  const location = useLocation()
+  const location = useLocation();
   return (
     <Sider
       style={{
-        overflow: 'auto',
-        height: '100vh',
-        position: 'fixed',
+        overflow: "auto",
+        height: "100vh",
+        position: "fixed",
         left: 0,
         top: 0,
-        bottom: 0
+        bottom: 0,
       }}
     >
       <div className={styles.logo} />
       <Menu
-        theme='dark'
-        mode='inline'
-        defaultSelectedKeys={['home']}
+        theme="dark"
+        mode="inline"
+        defaultSelectedKeys={["home"]}
         selectedKeys={[location.pathname]}
         // openKeys={[location.pathname]}
         items={items}
       />
     </Sider>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;
