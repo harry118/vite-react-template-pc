@@ -1,3 +1,8 @@
+// * {
+//   margin: 0;
+//   padding: 0;
+//   box-sizing: border-box;
+// }
 .floatBtn {
   display: flex;
   justify-content: space-between;
@@ -58,14 +63,18 @@
     overflow-y: auto;
     // padding: 20px;
     .preview-content {
-      background-color: rgb(255, 255, 255);
+      display: flex;
+      flex-direction: column;
+      gap: 1mm; /* 页面之间的间隔 */
+      // background-color: rgb(255, 255, 255);
       width: 210mm;
       min-height: calc(100vh - 48px - 56px);
       height: auto;
-      box-sizing: border-box;
-      padding: 10mm;
+      box-sizing: content-box;
+      // padding: 10mm;
+
       margin: auto;
-      position: relative;
+      // position: relative;
     }
   }
 }
@@ -85,12 +94,28 @@
   justify-content: space-around;
   align-items: center;
 }
+// 每一页的样式
+.page-container {
+  background-color: #fff;
+  width: 210mm;
+  // min-height: 297mm;
+  // padding: 4mm;
+  // margin-bottom: 1mm;
+  // box-sizing: content-box;
+  box-sizing: border-box;
+  // outline: 1mm solid #000; /* 用 outline 模拟 border */
+  // border: 1mm solid transparent; /* 设置边框来增加视觉间隔 */
+  // box-sizing: border-box;
+  // page-break-before: always; /* 在新的一页开始 */
+  // page-break-after: always; /* 在结束时插入分页 */
+  // page-break-inside: avoid; /* 避免内部被打断 */
+}
 
 .page {
   // page-break-before: always; /* 在新的一页开始 */
   // page-break-after: always;  /* 在结束时插入分页 */
-  page-break-inside: avoid;  /* 避免内部被打断 */
-  margin: 0;  /* 确保没有不必要的空白边距 */
+  page-break-inside: avoid; /* 避免内部被打断 */
+  margin: 0; /* 确保没有不必要的空白边距 */
   // padding: 10px; /* 添加一点内边距 */
 }
 .avoid-break {

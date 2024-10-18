@@ -8,11 +8,13 @@ import React, {
   useState,
 } from "react";
 import { useResizeObserver } from "@wojtekmaj/react-hooks";
+import { useImage } from "../../context";
 import "./index.less";
 
 const SignatureModal = (props: { canvasProps: any }) => {
   // Use a hook to manage the modal state
   const modal = useModal();
+  const { imageBase64, setImageBase64, setText } = useImage();
   const signCanvasRef = useRef<any>();
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerSize, setContainerSize] = useState<any>({
@@ -33,8 +35,13 @@ const SignatureModal = (props: { canvasProps: any }) => {
     return signCanvasRef.current.getCanvas().toDataURL("image/png");
   }, []);
   const handleDrawOnend = () => {
-    signCanvasRef.current.getCanvas().toDataURL("image/png");
-    console.log("img", signCanvasRef.current.getCanvas().toDataURL("image/png"))
+    const imgData = signCanvasRef.current.getCanvas().toDataURL("image/png");
+    setImageBase64(imgData);
+    setText("momomomomomomomo");
+    console.log(
+      "img",
+      signCanvasRef.current.getCanvas().toDataURL("image/png")
+    );
   };
   //   useImperativeHandle(
   //     ref,

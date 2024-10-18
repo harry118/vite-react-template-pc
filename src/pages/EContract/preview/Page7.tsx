@@ -13,15 +13,12 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
 import NanumGothic from "@assets/NanumGothic-Regular.ttf";
-import { useImage } from "../context";
 
-const Page2: React.FC = () => {
-  const { imageBase64, setImageBase64, text } = useImage();
+const Page7: React.FC = () => {
   return (
     <div className="avoid-break">
-      <p>page2</p>
-      <img src={imageBase64 as any} />
+      <p>Page7</p>
     </div>
   );
 };
-export default Page2;
+export default Page7;
